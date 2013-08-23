@@ -43,5 +43,10 @@ module Baseballer
       return -1 if from_season.nil? || to_season.nil? || from_season["AB"].to_i < 200 || to_season["AB"].to_i < 200
       avg_for(to_year) - avg_for(from_year)
     end
+
+    def slg_for(year)
+      season = season_for(year)
+      (season["H"].to_i + season["2B"].to_i + (season["3B"].to_i * 2) + (season["HR"].to_i * 3)).to_f/season["AB"].to_i
+    end
   end
 end

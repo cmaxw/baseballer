@@ -42,7 +42,7 @@ module Baseballer
       batter = Batter.new(@row["playerID"])
       batter.seasons << @row
       batter.seasons << @row2
-      batter.avg_improvement("2012", "2013").should == (246.to_f/573.to_f) - (146.to_f/573.to_f)
+      batter.avg_improvement("2012", "2013").should == (246.to_f/573) - (146.to_f/573)
     end
 
     it "returns a -1 AVG improvement if any season has below 200 hits" do
@@ -57,6 +57,12 @@ module Baseballer
       batter = Batter.new(@row["playerID"])
       batter.seasons << @row2
       batter.avg_improvement("2012", "2013").should == -1
+    end
+
+    it "calculates the SLG for a given batter" do
+      batter = Batter.new(@row["playerID"])
+      batter.seasons << @row
+      batter.slg_for("2012").should == (249.to_f/573)
     end
   end
 end
