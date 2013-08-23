@@ -59,10 +59,26 @@ module Baseballer
       batter.avg_improvement("2012", "2013").should == -1
     end
 
-    it "calculates the SLG for a given batter" do
+    it "calculates the fantasy score for a given batter" do
       batter = Batter.new(@row["playerID"])
       batter.seasons << @row
-      batter.slg_for("2012").should == (249.to_f/573)
+      batter.fantasy_score_for("2012").should == 80 + 78 + 24 - 10
     end
+
+    it "calculates the improvement in fantasy score for a given batter" do
+      batter = Batter.new(@row["playerID"])
+      batter.seasons << @row
+      batter.seasons << @row2
+      batter.fantasy_improvement("2012", "2013").should == 0
+    end
+
+    it "returns a -1 AVG improvement if any season has below 200 hits" do
+      batter = Batter.new(@row["playerID"])
+      batter.seasons << @row
+      @row2["AB"] = "499"
+      batter.seasons << @row2
+      batter.fantasy_improvement("2012", "2013").should == -1
+    end
+
   end
 end
