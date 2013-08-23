@@ -14,7 +14,8 @@ module Baseballer
     intro_string = "Most Improved Batting Average#{limit > 1 ? "s" : ""} from #{from_year} to #{to_year}"
     puts intro_string
     puts "=" * intro_string.length
-    sorted_avg = batters.sort { |a, b| a.avg_improvement(from_year, to_year) }[0,limit]
+    sorted_avg = batters.sort { |a, b| b.avg_improvement(from_year, to_year) <=> a.avg_improvement(from_year, to_year)}[0,limit]
+    
     sorted_avg.each {|b| puts b.player_id }
     puts "\n"
   end
@@ -37,8 +38,9 @@ module Baseballer
     puts (hits + twoB + (2*threeB) + (3*hr)).to_f/ab
   end
 
-  def self.print_most_improved_fantasy_scores(start_year, end_year, limit = 5)
-
+  def self.print_most_improved_fantasy_scores(batters, start_year, end_year, limit = 5)
+    fantasy_batters = batters.sort { |a, b| a.fantasy_improvement(start_year, end_year) <=> b.fantasy_improvement(start_year, end_year) }[0, 5]
+    fantasy_batters
   end
 
   def self.print_triple_crown_winners(*args)
