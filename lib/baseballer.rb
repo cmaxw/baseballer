@@ -11,19 +11,16 @@ module Baseballer
   end
 
   def self.print_most_improved_AVG(batters, from_year = "2009", to_year = "2010", limit = 1)
-    intro_string = "Most Improved Batting Average#{limit > 1 ? "s" : ""} from #{from_year} to #{to_year}"
-    puts intro_string
-    puts "=" * intro_string.length
+    print_title "Most Improved Batting Average#{limit > 1 ? "s" : ""} from #{from_year} to #{to_year}"
+
     sorted_avg = batters.sort { |a, b| b.avg_improvement(from_year, to_year) <=> a.avg_improvement(from_year, to_year)}[0,limit]
-    
     sorted_avg.each {|b| puts b.player_id }
     puts "\n"
   end
 
   def self.print_OAK_SLG(batters)
-    intro_string = "2007 Oakland A's Slugger Percentage"
-    puts intro_string
-    puts "=" * intro_string.length
+    print_title "2007 Oakland A's Slugger Percentage"
+
     oak_seasons = batters.map do |b| 
       season = b.season_for("2007")
       if season && season["teamID"] == "OAK"
@@ -45,5 +42,11 @@ module Baseballer
 
   def self.print_triple_crown_winners(*args)
 
+  end
+
+  def self.print_title(title)
+    puts "\n"
+    puts title
+    puts "=" * title
   end
 end
