@@ -47,6 +47,6 @@ module Baseballer
   def self.print_title(title)
     puts "\n"
     puts title
-    puts "=" * title
+    puts "=" * title.length
   end
 end
