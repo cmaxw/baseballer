@@ -80,5 +80,19 @@ module Baseballer
       batter.fantasy_improvement("2012", "2013").should == -1
     end
 
+    it "finds the triple crown winner" do
+      batter1 = Batter.new(@row["playerID"])
+      batter2 = Batter.new(@row2["playerID"])
+
+      batter1.seasons << @row
+      @row2["yearID"] = "2012"
+      batter2.seasons << @row2
+      
+      Batter.class_eval do
+        @batters = [batter1, batter2]
+      end
+
+      Batter.triple_crown_for("2012").should == batter2
+    end
   end
 end
